@@ -1,0 +1,12 @@
+@import './base.css';
+
+@font-face {
+    font-family: Roboto;
+    src: url('./Roboto-Regular.ttf');
+}
+
+body {
+    font-family: Roboto;
+    background: var(--main-bg);
+    color: var(--main-color);
+}
