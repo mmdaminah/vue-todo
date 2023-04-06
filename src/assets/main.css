@@ -5,6 +5,10 @@
     src: url('./Roboto-Regular.ttf');
 }
 
+* {
+    transition: background-color 700ms;
+}
+
 body {
     font-family: Roboto;
     background: var(--main-bg);

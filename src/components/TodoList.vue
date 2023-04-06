@@ -4,14 +4,14 @@ import TodoItem from './TodoItem.vue';
 export default {
     props: ['todos', 'searchKey', 'searchDone'],
     methods: {
-        deleteTodo(index) {
-            this.$emit('deleteTodo', index);
+        deleteTodo(id) {
+            this.$emit('deleteTodo', id);
         },
-        updateTitle(index, updateTodo) {
-            this.$emit('updateTodo', index, updateTodo);
+        updateTitle(id, updateTodo) {
+            this.$emit('updateTodo', id, updateTodo);
         },
-        updateStatus(index, status) {
-            this.$emit('changeStatus', index, status);
+        updateStatus(id, status) {
+            this.$emit('changeStatus', id, status);
         },
         filterTodos() {
             return this.todos.filter((item) => {
@@ -26,7 +26,8 @@ export default {
 };
 </script>
 <template>
-    <div class="container">
+    <!-- <div class="container"> -->
+    <TransitionGroup tag="div" class="container" name="list" appear>
         <TodoItem
             :todo="todo"
             :index="index"
@@ -34,14 +35,33 @@ export default {
             @deleteTodo="deleteTodo"
             @updateTitle="updateTitle"
             @changeStatus="updateStatus"
+            @click="this.$router.push(`/todo/${todo.id}`)"
+            style="cursor: pointer"
             v-for="(todo, index) in filterTodos()"
         />
-    </div>
+    </TransitionGroup>
+    <!-- </div> -->
 </template>
 <style scoped>
 .container {
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
+}
+.list-enter-from {
+    opacity: 0;
+    transform: scale(0.6);
+}
+
+.list-enter-active {
+    transition: all 400ms ease;
+}
+
+.list-leave-to {
+    opacity: 0;
+    transform: scale(0.6);
+}
+.list-leave-active {
+    transition: all 400ms ease;
 }
 </style>

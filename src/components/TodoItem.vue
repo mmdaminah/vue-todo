@@ -9,34 +9,34 @@ export default {
         };
     },
     methods: {
-        deleteTodo(index) {
-            this.$emit('deleteTodo', index);
+        deleteTodo(id) {
+            this.$emit('deleteTodo', id);
         },
         updateTitle() {
             this.isUpdating = !this.isUpdating;
-            this.$emit('updateTitle', this.index, this.title);
+            this.$emit('updateTitle', this.todo.id, this.title);
         },
         changeStatus(event) {
             this.isDone = event.target.checked;
-            this.$emit('changeStatus', this.index, this.isDone);
+            this.$emit('changeStatus', this.todo.id, this.isDone);
         },
     },
 };
 </script>
 <template>
     <div class="card" v-if="isUpdating">
-        <form style="flex: 1" @submit.prevent action="">
-            <input class="input" type="text" v-model="title" />
+        <form style="flex: 1; margin: 0" @submit.prevent action="">
+            <input @click.stop class="input" type="text" v-model="title" />
             <button
                 class="button"
-                @click="updateTitle"
+                @click.stop="updateTitle"
                 style="background-color: #5cb85c"
             >
                 Save
             </button>
             <button
                 class="button"
-                @click="isUpdating = !isUpdating"
+                @click.stop="isUpdating = !isUpdating"
                 style="background-color: #f0ad4e"
             >
                 Cancel
@@ -49,7 +49,7 @@ export default {
         </div>
         <button
             class="button"
-            @click="deleteTodo(index)"
+            @click.stop="deleteTodo(todo.id)"
             style="background-color: #d9534f"
         >
             Delete
@@ -57,7 +57,7 @@ export default {
         <button
             class="button"
             style="background-color: #5bc0de"
-            @click="isUpdating = !isUpdating"
+            @click.stop="isUpdating = !isUpdating"
         >
             Update
         </button>
@@ -68,6 +68,7 @@ export default {
             :checked="todo.isDone"
             :id="`done${index}`"
             @change="changeStatus"
+            @click.stop
         />
     </div>
 </template>
